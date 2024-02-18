@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Header from "./Header";
-import AddExpense from "./AddExpense";
+import AddExpense from "./AddExpenseButton";
 import MonthBar from "./MonthBar";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -48,7 +48,7 @@ function Expenses() {
 
       console.log(res);
     } catch (error) {
-      <console className="error"></console>(error);
+     console.error(error);
     }
   };
 
