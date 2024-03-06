@@ -1,8 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import { IconButton, Tooltip, Typography } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import Fade from "@mui/material/Fade";
+import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, IconButton, Tooltip, Typography } from "@mui/material";
 import AddExpenseModal from "./AddExpenseModal";
 
 interface AddExpenseButtonProps {
@@ -17,10 +15,6 @@ function AddExpense({
   monthName,
 }: AddExpenseButtonProps) {
 
-
-  console.log(months);
-  
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -28,36 +22,17 @@ function AddExpense({
   let year = date.getFullYear();
 
   return (
-    <Box
-      height={"5vh"}
-      sx={{
-        backgroundColor: "#FFFFFF",
-        display: "flex",
-        alignItems: "center",
-        borderBottom: "solid",
-      }}
-    >
-      <Typography variant="h6" sx={{ paddingLeft: 2 }}>
-        {monthName} - {year}
-      </Typography>
-      <Tooltip
-        TransitionComponent={Fade}
-        TransitionProps={{ timeout: 600 }}
-        title="Add new expense"
-        sx={{ fontSize: 40, marginLeft: "auto" }}
-      >
-        <IconButton onClick={handleOpen}>
-          <AddIcon></AddIcon>
-        </IconButton>
-      </Tooltip>
-
+    <Grid container justifyContent="center" alignItems="center" maxHeight="100%" >
+      <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'flex-end',alignItems:"center" }}>
+        <Button variant="contained" size="large" color="primary" onClick={handleOpen}> Add New Expense </Button>
+      </Grid>
       <AddExpenseModal
         openModal={open}
         handleClose={handleClose}
         months={months}
         activeMonth={monthName}
       ></AddExpenseModal>
-    </Box>
+    </Grid>
   );
 }
 

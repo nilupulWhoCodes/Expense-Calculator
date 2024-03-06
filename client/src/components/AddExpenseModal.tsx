@@ -43,7 +43,6 @@ export default function AddExpenseModal({
     Other: [],
   };
 
-  //error-handling
   const [categoryError, setCategoryError] = useState<string>("");
   const [inputError, setInputError] = useState<string>("");
 
@@ -51,6 +50,7 @@ export default function AddExpenseModal({
   const [expenseTypes, setExpenseType] = useState<string[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
+  const [selectedMonth, setSelectedMonth] = useState(activeMonth);
 
 
   const handleCategorySelect = (event: SelectChangeEvent<string>) => {
@@ -71,10 +71,9 @@ export default function AddExpenseModal({
     }));
   };
   useEffect(() => {
-    const valuesArray = Object.values(inputValues);
-
-    const formattedValues = valuesArray.map((value) => formatNumber(value));
     let total = 0;
+    const valuesArray = Object.values(inputValues);
+    const formattedValues = valuesArray.map((value) => formatNumber(value));
     formattedValues.map((item) => {
       total = total + item;
     });
@@ -106,12 +105,16 @@ export default function AddExpenseModal({
         "http://localhost:8800/add-expense",
         requestData
       );
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const isObjectEmpty = (objectName: Record<string, any>): boolean => {
     return _.isEmpty(objectName);
   };
+
+  const handleMonthSelect = (event: SelectChangeEvent<string>) => {
+    setSelectedMonth(event.target.value);
+  }
 
   const handleSubmit = () => {
     if (category === "") {
@@ -122,12 +125,21 @@ export default function AddExpenseModal({
     }
 
     const jsonRequest = {
-      month: activeMonth,
+      month: selectedMonth,
       category: category,
       expenses: inputValues,
     };
     postExpenses(jsonRequest);
   };
+
+  const handleClearButton = () => {
+    setCategoryError("");
+    setInputValues({});
+    setTotal(0);
+    setExpenseType([]);
+    setSelectedMonth(activeMonth);
+    setCategory("");
+  }
 
   const ModalTitle = () => (
     <Typography
@@ -150,9 +162,10 @@ export default function AddExpenseModal({
               <InputLabel id="month-name">Month</InputLabel>
               <Select
                 labelId="month-name"
-                value={activeMonth}
+                value={selectedMonth}
                 label="Expense Type"
-                defaultValue={activeMonth}
+                defaultValue={selectedMonth}
+                onChange={handleMonthSelect}
                 sx={{
                   fontSize: 14,
                 }}
@@ -218,6 +231,7 @@ export default function AddExpenseModal({
             size="small"
             variant="outlined"
             color="success"
+            onClick={handleClearButton}
           >
             Clear
           </Button>
@@ -243,7 +257,7 @@ export default function AddExpenseModal({
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Stack display={"flex"} height={"50vh"} style={{ overflowY: "auto" }}>
+        <Stack display={"flex"} height={category === "" ? "35vh" : "50vh"} style={{ overflowY: "auto" }}>
           <ModalTitle />
           <Typography id="modal-modal-description" sx={{ mt: 2, mb: 3 }}>
             Month - February
@@ -257,21 +271,30 @@ export default function AddExpenseModal({
             m={1}
             mb={3}
           >
-            {expenseTypes.map((type) => (
-              <FormControl sx={{ mt: 2, width: "49%" }} key={type} size="small">
-                <TextField
-                  id={type}
-                  label={type}
-                  variant="outlined"
-                  onChange={(e: any) => handleOnChange(e)}
-                />
-                {inputError && (
-                  <FormHelperText style={{ color: "red" }}>
-                    {inputError}
-                  </FormHelperText>
-                )}
-              </FormControl>
-            ))}
+
+            {
+              category === "" ?
+                <Grid container display={"flex"} justifyContent={"center"} alignItems={'center'} height={"100%"} maxHeight={"100%"} mt={2}>
+                  <Grid item xs={12} md={12} >
+                    <Typography textAlign={'center'} color={"#DCDCDC"} fontWeight={"bold"}> Please Select an Expense Type </Typography>
+                  </Grid>
+                </Grid>
+                :
+                expenseTypes.map((type) => (
+                  <FormControl sx={{ mt: 2, width: "49%" }} key={type} size="small">
+                    <TextField
+                      id={type}
+                      label={type}
+                      variant="outlined"
+                      onChange={(e: any) => handleOnChange(e)}
+                    />
+                    {inputError && (
+                      <FormHelperText style={{ color: "red" }}>
+                        {inputError}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                ))}
           </Stack>
         </Stack>
         <ModalFooter />
