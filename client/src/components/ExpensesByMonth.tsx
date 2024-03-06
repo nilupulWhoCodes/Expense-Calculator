@@ -77,8 +77,8 @@ function ExpensesByMonth({ months, currentMonth, handleOnChange, expenseData }: 
                                             </Stack>
                                         </Grid>
                                     </ListItemButton>
+                                    <Divider/>
                                     <Collapse in={open[index]} timeout="auto" unmountOnExit>
-
                                         {expense.subexpenses && expense.subexpenses.map(({ subcategory, amount }: { subcategory: string; amount: number | string }, index: number) => (
                                             <List component="div" disablePadding key={index}>
                                                 <Grid container direction="row" alignItems="center" spacing={2}>
@@ -99,12 +99,6 @@ function ExpensesByMonth({ months, currentMonth, handleOnChange, expenseData }: 
                                                 </Grid>
                                             </List>
                                         ))}
-
-
-
-
-
-
                                     </Collapse>
                                 </List>
                             ))
