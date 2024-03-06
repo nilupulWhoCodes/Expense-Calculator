@@ -13,6 +13,7 @@ import {
   Stack,
   TextField,
   Typography,
+  Divider
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -143,7 +144,6 @@ export default function AddExpenseModal({
 
   const ModalTitle = () => (
     <Typography
-      style={{ borderBottom: "0.5px solid" }}
       id="modal-title"
       variant="h6"
       component="h2"
@@ -259,8 +259,9 @@ export default function AddExpenseModal({
       <Box sx={style}>
         <Stack display={"flex"} height={category === "" ? "35vh" : "50vh"} style={{ overflowY: "auto" }}>
           <ModalTitle />
+          <Divider />
           <Typography id="modal-modal-description" sx={{ mt: 2, mb: 3 }}>
-            Month - February
+            Month - {selectedMonth}
           </Typography>
           <ExpenseType />
           <Stack
@@ -271,7 +272,6 @@ export default function AddExpenseModal({
             m={1}
             mb={3}
           >
-
             {
               category === "" ?
                 <Grid container display={"flex"} justifyContent={"center"} alignItems={'center'} height={"100%"} maxHeight={"100%"} mt={2}>

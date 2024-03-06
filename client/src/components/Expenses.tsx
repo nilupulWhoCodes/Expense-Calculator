@@ -1,10 +1,8 @@
 import Box from "@mui/material/Box";
 import Header from "./Header";
 import AddExpense from "./AddExpenseButton";
-import MonthBar from "./MonthBar";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import ShowExpenses from "./ShowExpenses";
 import { Divider, Grid, SelectChangeEvent, Stack } from "@mui/material";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { axisClasses } from "@mui/x-charts";
@@ -103,9 +101,7 @@ function Expenses() {
   useEffect(() => {
     getGraphData(currentYear);
   }, [currentYear]);
-  useEffect(() => {
-    getGraphData(currentYear);
-  }, []);
+
 
   const valueFormatter = (value: number) => `Rs.${value}`;
 

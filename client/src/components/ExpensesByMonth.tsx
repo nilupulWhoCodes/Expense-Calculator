@@ -1,13 +1,9 @@
 import { Collapse, Divider, FormControl, Grid, InputLabel, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, MenuItem, Select, SelectChangeEvent, Stack, Typography } from "@mui/material";
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { StarBorder } from "@mui/icons-material";
 import React from "react";
-import axios from "axios";
-
 
 interface ExpensesByMonthProps {
     months: string[];
@@ -80,7 +76,7 @@ function ExpensesByMonth({ months, currentMonth, handleOnChange, expenseData }: 
                                     <Divider/>
                                     <Collapse in={open[index]} timeout="auto" unmountOnExit>
                                         {expense.subexpenses && expense.subexpenses.map(({ subcategory, amount }: { subcategory: string; amount: number | string }, index: number) => (
-                                            <List component="div" disablePadding key={index}>
+                                            <List component="div" key={index} disablePadding >
                                                 <Grid container direction="row" alignItems="center" spacing={2}>
                                                     <Grid item xs={9} md={9} sm={9}>
                                                         <ListItemButton sx={{ pl: 4 }}>
