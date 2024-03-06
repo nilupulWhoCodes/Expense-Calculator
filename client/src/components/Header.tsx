@@ -1,13 +1,13 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 function Header() {
     return (
-        <div>
-            <Typography variant="h3" fontFamily={'monospace'} textAlign={'center'}>
+        <Stack m={3}>
+            <Typography variant="h3" fontFamily={'monospace'}>
                 Expense Calculator
             </Typography>
-        </div>
+        </Stack>
     );
 }
 
